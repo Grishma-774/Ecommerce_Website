@@ -26,7 +26,7 @@ function Order_History(){
                             </div>
 
                             <div className="order_bottom">
-                                <p>Total: ${item.total}</p>
+                                <p>Total: ${item.total.toFixed(2)}</p>
                                 <button onClick={() => navigate(`/order_details/${index}`)}>View Details</button>
                             </div>
                         </div>
