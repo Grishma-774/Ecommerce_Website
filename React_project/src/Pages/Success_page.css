@@ -29,13 +29,13 @@
     margin-top: 20px;
     padding: 10px 20px;
     cursor: pointer;
-    background-color:lightgray;
+    background-color:gray;
     font-weight: 400;
     border-radius: 10px;
 }
 
 .order_box button:hover{
-    background-color: gray;
+    background-color: black;
     font-weight: 500;
 }
 

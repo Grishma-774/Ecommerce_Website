@@ -121,12 +121,11 @@ h3,p{
 
 body.light {
     background-color: white;
-    color: black;
 }
 
 /* DARK MODE */
 body.dark {
-    background-color: grey;
+    background-color:black;
     color: auto;
 }
 
