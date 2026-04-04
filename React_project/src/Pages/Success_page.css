@@ -1,0 +1,51 @@
+.order_container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order_box{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+    text-align: center;
+    padding: 40px;
+    background: #f5f5f2;
+    border-radius: 10px;
+}
+
+.customer_info{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.order_box h1{
+    color: green;
+}
+
+.order_box button{
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color:lightgray;
+    font-weight: 400;
+    border-radius: 10px;
+}
+
+.order_box button:hover{
+    background-color: gray;
+    font-weight: 500;
+}
+
+.no_order{
+    font-weight: 600;
+}
+
+.item_details{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
+
+}
