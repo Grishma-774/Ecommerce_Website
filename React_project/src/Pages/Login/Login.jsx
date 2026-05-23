@@ -66,7 +66,7 @@ function Login(){
                         localStorage.setItem("refresh", result.refresh);
 
                         const userResponse = await fetch(
-                            "http://127.0.0.1:8000/accounts/me/",
+                            "https://ecommerce-backend-9tpa.onrender.com/accounts/me/",
                             {
                                 method: "GET",
                                 headers: {
