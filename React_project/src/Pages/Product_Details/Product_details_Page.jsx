@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
 import{useParams } from "react-router-dom"
-
+import { useOutletContext } from "react-router-dom"
 import "./Product_details_page.css"
+import { apiRequest } from "../../Util/AllApi.js"
 
-function Product_details_page({cart,setCart}){
+function Product_details_page(){
     const {id}=useParams()
     const [error, setError] = useState(null)
     const [prod_data,setProd_data]=useState(null)
     const[exist,setExist]=useState(null)
+    const { cart,get_cart_data } = useOutletContext()
 
     async function Prod_fetch(){
         try{
-            let prod_url=`https://dummyjson.com/products/${id}`
+            let prod_url=`https://ecommerce-backend-9tpa.onrender.com/products/${id}`
             let prod_response= await fetch(prod_url)
             if (!prod_response.ok) throw new Error("Failed to fetch product")
             let prod_result =await prod_response.json()
@@ -25,6 +27,52 @@ function Product_details_page({cart,setCart}){
     useEffect(()=>{
             Prod_fetch()
     },[id])
+
+    const add_to_cart = async (prod_id)=>{
+
+        let existingItem = cart?.data?.items?.find((item) => item.product.id === prod_id)
+
+        if(existingItem){
+            setExist(true)
+        }
+        else{
+            setExist(false)
+        }
+
+        try{
+
+            let response = await apiRequest("https://ecommerce-backend-9tpa.onrender.com/carts/cart_add/",{
+                method : 'POST',
+                body : JSON.stringify({
+                "items": [
+                    {
+                    "product": prod_id,
+                    "quantity": 1
+                    }
+                ]
+                })
+            })
+
+            let result = await response.json()
+
+            if(response.ok){
+
+                await get_cart_data()
+            }
+            else{
+
+                console.log("error",result)
+
+            }
+
+        }
+        catch(error){
+
+            console.log(error)
+
+        }
+    }
+
 
     if (error) return <p>{error}</p>
 
@@ -46,7 +94,7 @@ function Product_details_page({cart,setCart}){
                         <p className="prod_title">{prod_data.title} </p>
                     </div>
                     <div>
-                        <p className="prod_price">${prod_data.price}</p>
+                        <p className="prod_price">₹{prod_data.price}</p>
                     </div>
                     <div className="Prod_rate_con">
                         <p>⭐</p>
@@ -57,28 +105,7 @@ function Product_details_page({cart,setCart}){
                         <p className="prod_desc">{prod_data.description}</p>
                     </div>
                     <div>
-                        <button className="prod_addtocart" onClick={()=>{
-                            let items
-                            let existingItem=cart.find((item)=>(item.id===prod_data.id))
-                            if(existingItem){
-                                items =cart.map((item)=>{
-                                    if(item.id===prod_data.id){
-                                        return({...item,quantity:item.quantity+1})
-                                    }
-                                    else{
-                                        return item
-                                    }
-                                })
-                                setExist(true)
-                            }
-                            else{
-                                items=[...cart,{...prod_data,quantity:1}]
-                                setExist(false)
-
-                            }
-                            setCart(items)
-                        }}
-                        >ADD TO CART</button>
+                        <button className="prod_addtocart" onClick={()=>{add_to_cart(prod_data.id)}}>ADD TO CART</button>
                         {exist===true && <div className="cart_exist_msg">
                              <p>Product already exist in cart & Quantity increased in cart</p>
                         </div>}

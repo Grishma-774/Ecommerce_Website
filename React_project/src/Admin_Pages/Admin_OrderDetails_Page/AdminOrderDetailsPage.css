@@ -1,0 +1,187 @@
+
+/* =========================
+   Desktop First Styles
+========================= */
+
+.admin_order_details_container {
+    min-height: 100vh;
+    background: #f5f7fb;
+    padding: 40px 60px;
+    font-family: Arial, sans-serif;
+}
+
+/* Top Section */
+.top_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.top_section h2 {
+    font-size: 28px;
+    margin: 0;
+    color: #222;
+}
+
+/* Back Button */
+.back_btn {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.back_btn:hover {
+    background: #333;
+}
+
+/* Cards */
+.details_card {
+    background: #fff;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
+
+/* Card Titles */
+.details_card h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    color: #222;
+}
+
+/* Text */
+.details_card p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Product Item */
+.product_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product_item:last-child {
+    border-bottom: none;
+}
+
+/* Update Section */
+.update_section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.update_section div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.update_section label {
+    font-size: 13px;
+    color: #555;
+}
+
+/* Select Inputs */
+.update_section select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Update Button */
+.update_btn {
+    background: #1677ff;
+    color: #fff;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.update_btn:hover {
+    background: #0f5ed7;
+}
+
+/* Total Highlight */
+.details_card h2 {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #111;
+}
+
+/* =========================
+   Tablet View
+   (max-width: 1024px)
+========================= */
+
+@media (max-width: 1024px) {
+
+    .admin_order_details_container {
+        padding: 30px;
+    }
+
+    .top_section h2 {
+        font-size: 24px;
+    }
+
+    .update_section {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* =========================
+   Mobile View
+   (max-width: 768px)
+========================= */
+
+@media (max-width: 768px) {
+
+    .admin_order_details_container {
+        padding: 20px;
+    }
+
+    .top_section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .back_btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .details_card {
+        padding: 18px;
+    }
+
+    .product_item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .update_section {
+        flex-direction: column;
+    }
+
+    .update_btn {
+        width: 100%;
+    }
+}

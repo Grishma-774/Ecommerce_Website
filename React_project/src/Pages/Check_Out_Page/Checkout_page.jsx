@@ -2,8 +2,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Check_out_page.css"
-function Checkout_page({cart,setCart}){
+import { useOutletContext } from "react-router-dom"
+import { apiRequest } from "../../Util/AllApi.js"
+
+function Checkout_page(){
         const navigate=useNavigate()
+        const { cart,get_cart_data} = useOutletContext()
         const [form, setForm] = useState({
         name: "",
         phone: "",
@@ -46,7 +50,31 @@ function Checkout_page({cart,setCart}){
         })
     }
 
-    const place_order = () => {
+    const cart_empty = async ()=>{
+
+        try{
+
+            let response = await apiRequest("https://ecommerce-backend-9tpa.onrender.com/carts/cartItem/delete/",{
+                method : 'DELETE',
+                
+            })
+
+
+            if(response.ok){
+                await get_cart_data()
+            }
+            else {
+                let result = await response.json()
+                console.log("issue",result)
+            }
+
+        }
+        catch(error){
+            console.log("error",error)
+        }
+    }
+
+    const place_order = async () => {
         let newErrors = {
             name: "",
             phone: "",
@@ -85,40 +113,65 @@ function Checkout_page({cart,setCart}){
             return
         }
 
-        const new_order={
-            id: Date.now(),
-            name: form.name,
-            phone: form.phone,
-            address: form.address,
-            city: form.city,
-            state: form.state,
-            pincode: form.pincode,
-            payment: form.payment,
-            items: cart,
-            total: subtotal + 40
+        try {
+
+            const response = await apiRequest("https://ecommerce-backend-9tpa.onrender.com/orders/orderitems/", {
+                method: "POST",
+                body: JSON.stringify({
+                    name: form.name,
+                    phone: form.phone,
+                    address: form.address,
+                    city: form.city,
+                    state: form.state,
+                    pincode: form.pincode,
+                    payment: form.payment,
+                    items: cart?.data?.items?.map(item => ({
+                        product: item.product.id,
+                        quantity: item.quantity
+                    }))
+                })
+            })
+
+            const result = await response.json()
+
+            if (response.ok) {
+
+                // console.log("Order placed successfully", result)
+                
+                await cart_empty()// clear cart after order
+
+
+                setForm({
+                    name: "",
+                    phone: "",
+                    address: "",
+                    city: "",
+                    state: "",
+                    pincode: "",
+                    payment: ""
+                })
+
+                navigate("/success")
+
+            } else {
+                console.log("Order failed", result)
+            }
+
+        } 
+        catch (error) {
+            console.log("Error placing order", error)
         }
-
-        const existingOrders = JSON.parse(localStorage.getItem("order_details")) || []
-
-        localStorage.setItem("order_details",JSON.stringify([...existingOrders,new_order]))
-
-        
-        setCart([])
-
-        setForm({
-            name: "",
-            phone: "",
-            address: "",
-            city: "",
-            state: "",
-            pincode: "",
-            payment: ""
-        })
-
-        navigate("/success")
     }
 
-    let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+
+    let subtotal = cart?.data?.subtotal
+
+    let shipping_fee = cart?.data?.shipping_fee
+
+    let total = cart?.data?.final_total
+
+
     return(
         <div className="check_out_container">
             <div className="check_out_details">
@@ -162,9 +215,6 @@ function Checkout_page({cart,setCart}){
                         <div>
                             <input type="radio" name="payment" value="upi" onChange={handle_change} checked={form.payment === "upi"}/><label> UPI</label>
                         </div>
-                        <div>
-                            <input type="radio" name="payment" value="card_payment" onChange={handle_change} checked={form.payment === "card_payment"}/> <label>Card Payment</label>
-                        </div>
                         {error_msg.payment && <span className="error_style">{error_msg.payment}</span>}
                     </div>
                 </div>
@@ -172,13 +222,13 @@ function Checkout_page({cart,setCart}){
             <div className="Total_calculations">
                 <div className="Total_calculations_sub">
                     <div>
-                        <p className="check_subtotal">Subtotal: ${subtotal.toFixed(2)} </p>
+                        <p className="check_subtotal">Subtotal: ${subtotal} </p>
                     </div>
                     <div>
-                        <p className="check_del_fee">Delivery Fee: $40</p>
+                        <p className="check_del_fee">Delivery Fee: ${shipping_fee}</p>
                     </div>
                     <div>
-                        <p className="check_total">Total: ${(subtotal+40).toFixed(2)} </p>
+                        <p className="check_total">Total: ${total} </p>
                     </div>
                     <div>
                         <button className="place_order" onClick={place_order}>Place Order</button>

@@ -1,6 +1,4 @@
 .order_details_container{
-    /* max-width: 700px; */
-    /* margin: 30px auto; */
     padding: 20px;
     background: white;
     border-radius: 10px;
@@ -31,7 +29,9 @@
 
 .total_section{
     display:flex;
-    justify-content: flex-end;
+    gap:40px;
+    align-items: center;
+    justify-content: flex-end ;
     margin-top: 15px;
 }
 

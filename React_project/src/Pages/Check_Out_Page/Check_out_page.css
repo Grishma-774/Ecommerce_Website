@@ -94,6 +94,7 @@ h3,p{
     border: none;
     border-radius: 2px;
     padding: 0 60px;
+    cursor:pointer;
 }
 
 .error_style{

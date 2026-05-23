@@ -5,7 +5,7 @@ import { useState , useEffect} from "react"
 
 import "bootstrap-icons/font/bootstrap-icons.css"
 
-function Navbar({cards,search_value}){
+function Navbar({cart,setCart,search_value}){
 
     const [value,setValue]=useState("")
     const[open,setOpen]=useState(false)
@@ -49,7 +49,7 @@ function Navbar({cards,search_value}){
 
     let send_value=(e)=>{
         if (e.key === 'Enter') {
-            navigate("/")
+            navigate("/home")
             search_value(value)
         }
     }
@@ -65,10 +65,10 @@ function Navbar({cards,search_value}){
                 <div className="container2">
                     <div className="container3">
                         <div>
-                            <p className="home" onClick={()=>{navigate("/")}}>Home</p>
+                            <p className="home" onClick={()=>{navigate("/home")}}>Home</p>
                         </div>
                         <div>
-                            <p className="cart" onClick={Navigate}>Cart🛒({cards.reduce((sum, item) => sum + item.quantity, 0)})</p>
+                            <p className="cart" onClick={Navigate}>Cart🛒({cart?.data?.items?.reduce((acc,item)=> acc + item.quantity,0) || 0})</p>
                         </div>
                     </div>
                     <div>
@@ -76,7 +76,7 @@ function Navbar({cards,search_value}){
                     </div>
                 </div>
             </div>
-           {open && <div className="overlay"onClick={openstate} ></div>}
+           {open && <div className="overlay" onClick={openstate} ></div>}
             <div className={`sidebar ${open ? "open" : ""}`} onClick={(e) => e.stopPropagation()}>
                 <div>
                     <h4 className="header"><i className="bi bi-gear-fill"></i> Settings</h4>
@@ -90,6 +90,12 @@ function Navbar({cards,search_value}){
                     </div>
                     <div>
                         <p className="history" onClick={setLightMode}><i className="bi bi-sun"></i> Light Mode</p>
+                    </div>
+                    <div>
+                        <p className="history" onClick={()=>{localStorage.removeItem("access") 
+                                                            localStorage.removeItem("refresh") 
+                                                            localStorage.removeItem("user")
+                                                            navigate("/")}}>LOGOUT</p>
                     </div>
                 </div>
             </div>

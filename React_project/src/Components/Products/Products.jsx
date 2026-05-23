@@ -2,12 +2,14 @@
 import { useEffect, useState } from "react"
 import "./Products.css"
 import { useNavigate } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
+import { apiRequest } from "../../Util/AllApi.js"
 
-function Products({category,cart_fun,search_data}){
+function Products({category,search_data}){
 
     const [data,setData]=useState([])
-
     const [loading, setLoading] = useState(true)
+    const { get_cart_data } = useOutletContext()
     const navigate=useNavigate()
 
     let Navigation = (Prod_details) => {
@@ -15,12 +17,13 @@ function Products({category,cart_fun,search_data}){
     }
 
     async function P_details(){
+        setLoading(true)
         try{
-            let url="https://dummyjson.com/products"
-            let response= await fetch(url)
-            let result =await response.json()
-            console.log(result)
-            setData(result.products)
+            let url = `https://ecommerce-backend-9tpa.onrender.com/products/?search=${search_data}&category=${category}`
+            let response = await fetch(url)
+            let result = await response.json()
+            // console.log(result)
+            setData(result)
         }
         catch(error){
             console.log("Error fetching products", error)
@@ -31,9 +34,45 @@ function Products({category,cart_fun,search_data}){
 
     }
 
+    const add_to_cart = async (prod_id)=>{
+
+        try{
+
+            let response = await apiRequest("https://ecommerce-backend-9tpa.onrender.com/carts/cart_add/",{
+                method : 'POST',
+                body : JSON.stringify({
+                "items": [
+                    {
+                    "product": prod_id,
+                    "quantity": 1
+                    }
+                ]
+                })
+            })
+
+            let result = await response.json()
+
+            if(response.ok){
+                // console.log("successfully added to the cart",result)
+                await get_cart_data()
+            }
+            else{
+
+                console.log("error",result)
+
+            }
+        }
+        catch(error){
+
+            console.log(error)
+
+        }
+    }
+
+
     useEffect(()=>{
             P_details()
-    },[])
+    },[search_data, category])
 
     if (loading) {
         return (
@@ -43,15 +82,7 @@ function Products({category,cart_fun,search_data}){
         )
     }
 
-    let filterdata = data
-
-    .filter((item) =>
-        category === "all" ? true : item.category?.toLowerCase() === category.toLowerCase()
-    ).filter((item) =>
-        search_data === ""
-        ? true
-        : item.title.toLowerCase().includes(search_data.toLowerCase())
-    )
+    const filterdata = data
 
     return(
             <div className="grid_container">
@@ -59,7 +90,7 @@ function Products({category,cart_fun,search_data}){
                     filterdata.map((details)=>(
                         <div className="card" key={details.id} onClick={()=>{Navigation(details)}}>
                             <div className="img_container">
-                                <img src={details.thumbnail } alt={details.title} className="image" />
+                                <img src={details.thumbnail} alt={details.title} className="image" crossOrigin="anonymous" />
                                 
                             </div>
                             <div className="t_container">
@@ -71,9 +102,9 @@ function Products({category,cart_fun,search_data}){
                                 <p>({Math.floor(Math.random() * 500 + 50)})</p>
                             </div>
                             <div className="price_container">
-                                <p className="price">${details.price}</p>
+                                <p className="price">₹ {details.price}</p>
                             </div>
-                            <div className="Addtocart" onClick={(e)=>{e.stopPropagation(); cart_fun(details);}}>
+                            <div className="Addtocart" onClick={(e)=>{e.stopPropagation(); add_to_cart(details.id)}}>
                                 <p className="addcart">ADD TO CART</p>
                             </div>
                         </div>

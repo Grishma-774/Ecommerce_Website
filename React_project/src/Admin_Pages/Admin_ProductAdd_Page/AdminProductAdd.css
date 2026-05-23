@@ -1,0 +1,146 @@
+
+/* Container */
+.admin_add_container {
+    padding: 40px 80px;
+    min-height: 100vh;
+    background-color: #f5f7fb;
+}
+
+/* Heading */
+.admin_add_container h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #1e293b;
+}
+
+/* Form */
+.product_form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+}
+
+/* Inputs */
+.product_form input,
+.product_form textarea {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.product_form input:focus,
+.product_form textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+}
+
+/* Textarea */
+.product_form textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+/* File input */
+.product_form input[type="file"] {
+    padding: 8px;
+    background: #f8fafc;
+}
+
+/* Submit Button */
+.product_form button {
+    background-color: #22c55e;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.product_form button:hover {
+    background-color: #16a34a;
+}
+
+.product_form button:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.back-btn {
+    background-color: transparent;
+    border: 2px solid #1e293b;
+    color: #1e293b;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.back-btn:hover {
+    background-color: #1e293b;
+    color: #fff;
+}
+
+
+@media screen and (max-width: 992px) {
+
+    .admin_add_container {
+        padding: 30px 40px;
+    }
+
+    .product_form {
+        max-width: 100%;
+    }
+
+    .admin_add_container h2 {
+        font-size: 28px;
+    }
+
+    /* Back button adjustment */
+    .back-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .admin_add_container {
+        padding: 20px;
+    }
+
+    .admin_add_container h2 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .product_form {
+        padding: 20px;
+    }
+
+    .product_form button {
+        width: 100%;
+    }
+
+    /* Back button mobile */
+    .back-btn {
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+    }
+}
