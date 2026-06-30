@@ -6,11 +6,10 @@ import Category from "../../Components/Category/Category.jsx";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom"
 
-
 function Home(){
 
     const [cat,setCat]=useState("all")
-    const { search_data,setSearch} = useOutletContext()
+    const {search_data , setSearch } = useOutletContext()
 
     let yourFunction=(catg)=>{
         setCat(catg)

@@ -90,11 +90,11 @@ function Login(){
 
                         if(userData.is_staff){
 
-                            navigate("/admin_dashboard")
+                             window.location.href = "/admin_dashboard";
 
                         }
                         else{
-                            navigate("/home")
+                            window.location.href = "/"
                         }
 
                     }

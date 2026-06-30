@@ -77,7 +77,7 @@ function Success_page(){
 
                                 <p>
                                     Thank you,
-                                    <b> {latestOrder.name}</b> ❤️
+                                    <b> {latestOrder.name}❤️</b> 
                                 </p>
 
                                 <p>
@@ -115,7 +115,7 @@ function Success_page(){
 
                                 <button
                                     onClick={()=>{
-                                        navigate("/home")
+                                        navigate("/")
                                     }}
                                 >
                                     Continue Shopping

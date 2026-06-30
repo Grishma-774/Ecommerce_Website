@@ -33,7 +33,7 @@ function PublicRoute() {
                 }
                 else {
 
-                    setRedirectPath("/home")
+                    setRedirectPath("/")
 
                 }
 

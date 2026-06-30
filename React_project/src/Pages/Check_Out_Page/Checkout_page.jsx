@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Check_out_page.css"
 import { useOutletContext } from "react-router-dom"
@@ -17,7 +17,6 @@ function Checkout_page(){
         pincode: "",
         payment: ""
     })
-
     const [error_msg,setError_msg]=useState({
         name: "",
         phone: "",
@@ -27,6 +26,8 @@ function Checkout_page(){
         pincode: "",
         payment: ""
     })
+
+    
 
     let handle_change=(e)=>{
         const {name,value}=e.target 

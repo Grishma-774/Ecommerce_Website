@@ -1,52 +1,184 @@
+
 .order_container{
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    background: #f5f7fb;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 50px 20px;
+    box-sizing: border-box;
 }
 
 .order_box{
-    display:flex;
-    flex-direction: column;
-    gap:10px;
-    text-align: center;
+    width: 700px;
+    background: #ffffff;
+    border-radius: 15px;
     padding: 40px;
-    background: #f5f5f2;
-    border-radius: 10px;
-}
-
-.customer_info{
-    display:flex;
-    flex-direction: column;
-    gap:10px;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
 .order_box h1{
-    color: green;
+    color: #28a745;
+    font-size: 34px;
+    margin-bottom: 15px;
 }
 
-.order_box button{
-    margin-top: 20px;
-    padding: 10px 20px;
+.order_box > p{
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.customer_info{
+    background: #f9fafc;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: left;
+}
+
+.customer_info p{
+    font-size: 18px;
+    margin: 16px 0;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.customer_info b{
+    color: #000;
+}
+
+.success_btns{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.success_btns button{
+    border: none;
+    padding: 14px 28px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    background-color:gray;
-    font-weight: 400;
-    border-radius: 10px;
+    transition: 0.3s;
 }
 
-.order_box button:hover{
-    background-color: black;
-    color:white;
-    font-weight: 500;
+.success_btns button:first-child{
+    background: #0d6efd;
+    color: white;
+}
+
+.success_btns button:first-child:hover{
+    background: #0b5ed7;
+}
+
+.success_btns button:last-child{
+    background: #28a745;
+    color: white;
+}
+
+.success_btns button:last-child:hover{
+    background: #218838;
 }
 
 .no_order{
-    font-weight: 600;
+    font-size: 22px;
+    color: #666;
+    padding: 30px 0;
 }
 
-.item_details{
-    display:flex;
-    flex-direction: column;
-    gap:10px;
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media (max-width: 992px){
+
+    .order_box{
+        width: 90%;
+        padding: 35px 30px;
+    }
+
+    .order_box h1{
+        font-size: 30px;
+    }
+
+    .order_box > p{
+        font-size: 17px;
+    }
+
+    .customer_info p{
+        font-size: 17px;
+    }
+
+    .success_btns button{
+        font-size: 16px;
+        padding: 13px 24px;
+    }
+
+}
+
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width: 600px){
+
+    .order_container{
+        padding: 20px 12px;
+    }
+
+    .order_box{
+        width: 100%;
+        padding: 25px 18px;
+        border-radius: 12px;
+    }
+
+    .order_box h1{
+        font-size: 26px;
+        line-height: 1.4;
+    }
+
+    .order_box > p{
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .customer_info{
+        padding: 18px;
+    }
+
+    .customer_info p{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 16px;
+        margin: 15px 0;
+    }
+
+    .success_btns{
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .success_btns button{
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+    }
+
+    .no_order{
+        font-size: 18px;
+    }
 
 }

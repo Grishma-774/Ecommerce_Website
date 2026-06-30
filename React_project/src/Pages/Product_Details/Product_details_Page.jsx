@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import{useParams } from "react-router-dom"
-import { useOutletContext } from "react-router-dom"
+import{useParams, useOutletContext, useNavigate} from "react-router-dom"
 import "./Product_details_page.css"
 import { apiRequest } from "../../Util/AllApi.js"
 
@@ -10,6 +9,7 @@ function Product_details_page(){
     const [prod_data,setProd_data]=useState(null)
     const[exist,setExist]=useState(null)
     const { cart,get_cart_data } = useOutletContext()
+    const navigate = useNavigate();
 
     async function Prod_fetch(){
         try{
@@ -30,14 +30,14 @@ function Product_details_page(){
 
     const add_to_cart = async (prod_id)=>{
 
-        let existingItem = cart?.data?.items?.find((item) => item.product.id === prod_id)
+        const token = localStorage.getItem("access");
 
-        if(existingItem){
-            setExist(true)
+        if (!token) {
+            navigate("/login");
+            return;
         }
-        else{
-            setExist(false)
-        }
+
+        let existingItem = cart?.data?.items?.find((item) => item.product.id === prod_id)
 
         try{
 
@@ -53,14 +53,23 @@ function Product_details_page(){
                 })
             })
 
-            let result = await response.json()
-
             if(response.ok){
 
                 await get_cart_data()
-            }
+
+                if (existingItem){
+                    setExist(true);
+                } else {
+                    setExist(false);
+                }
+
+                setTimeout(() => {
+                    setExist(null);
+                   }, 2500);
+                }
             else{
 
+                const result = await response.json();
                 console.log("error",result)
 
             }
@@ -107,10 +116,10 @@ function Product_details_page(){
                     <div>
                         <button className="prod_addtocart" onClick={()=>{add_to_cart(prod_data.id)}}>ADD TO CART</button>
                         {exist===true && <div className="cart_exist_msg">
-                             <p>Product already exist in cart & Quantity increased in cart</p>
+                             <p>Product already exists in the cart. Quantity increased.</p>
                         </div>}
                         {exist===false &&<div className="cart_exist_msg">
-                            <p>Product added to the cart successfully!</p>
+                            <p>Product added to cart successfully!</p>
                         </div>}
                     </div>
                 </div>

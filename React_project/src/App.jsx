@@ -92,10 +92,10 @@ function App() {
 
                     <Route element={<Layout cart={cart} setCart={setCart} get_cart_data={get_cart_data} search_value={show_prod} search_data={search_data} setSearch={setSearch}/>}>
 
-                      <Route path="/home" element={<Home/>}/>
+                      {/* <Route path="/home" element={<Home/>}/> */}
 
                       <Route path="/cart_page" element={<Cart />}/>
-                      <Route path="/product_details_page/:id" element={<Product_details_page/>}/>
+                      {/* <Route path="/product_details_page/:id" element={<Product_details_page/>}/> */}
                       <Route path="/checkout" element={<Checkout_page />}/>
                       <Route path="/success" element={<Success_page/>}/>
                       <Route path="/order_history" element={<Order_History/>}/>
@@ -113,18 +113,21 @@ function App() {
                         <Route path ="/admin/products/edit/:id" element={<AdminProductEdit/>}/>
 
                     </Route>
-
-                 
             
                 </Route>
 
-              <Route element={<Public_Route />}>
 
-                  <Route path="/" element={<Login/>}/>
-                  <Route path="/Register" element={<Register/>}/>
+              <Route element={<Layout cart={cart} setCart={setCart} get_cart_data={get_cart_data} search_value={show_prod} search_data={search_data} setSearch={setSearch}/>}>
 
-              </Route>
+                  <Route path="/" element={<Home/>}/>
+                  <Route path="/product_details_page/:id" element={<Product_details_page />} />
               
+              </Route>
+
+              <Route element={<Public_Route />}>
+                  <Route path="/login" element={<Login/>}/>
+                  <Route path="/Register" element={<Register/>}/>
+              </Route>
 
             </Routes>
       </Suspense>

@@ -40,7 +40,7 @@ export const apiRequest = async (url, options = {}) => {
 
             // redirect login
             if(window.location.pathname !== "/"){
-                window.location.href = "/"
+                window.location.href = "/login"
             }
 
             throw new Error("Session expired")

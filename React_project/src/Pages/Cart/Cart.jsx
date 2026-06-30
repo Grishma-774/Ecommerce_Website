@@ -75,13 +75,16 @@ function Cart(){
         }
     }
 
+    if (!cart) {
+        return <p>Loading...</p>;
+    }
     
-    if(!cart || cart?.data?.items?.length === 0){
+    if(cart?.data?.items?.length === 0){
         return(
             <div className="empty">
                     <h2>Your Cart is Empty 🛒</h2>
                     <p>Browse products and add items</p>
-                    <button className="continue_shopping" onClick={()=>{navigate("/home")}}>Continue Shopping</button>
+                    <button className="continue_shopping" onClick={()=>{navigate("/")}}>Continue Shopping</button>
             </div>
         )
     }

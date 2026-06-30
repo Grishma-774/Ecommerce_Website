@@ -92,7 +92,7 @@ function Register(){
                                 confirm_pass: ""
                             });
 
-                            navigate("/")
+                            navigate("/login")
                         } 
                         else{
                             console.log("server error",result)
@@ -174,7 +174,7 @@ function Register(){
             
                     <div className="footer1">
                         <p>Already have an account?</p>
-                        <p><Link to="/">Login</Link></p>
+                        <p><Link to="/login">Login</Link></p>
                     </div>
 
             </div>

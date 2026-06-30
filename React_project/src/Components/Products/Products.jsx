@@ -36,6 +36,14 @@ function Products({category,search_data}){
 
     const add_to_cart = async (prod_id)=>{
 
+        const token = localStorage.getItem("access");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
+        
         try{
 
             let response = await apiRequest("https://ecommerce-backend-9tpa.onrender.com/carts/cart_add/",{
@@ -56,10 +64,9 @@ function Products({category,search_data}){
                 // console.log("successfully added to the cart",result)
                 await get_cart_data()
             }
-            else{
-
-                console.log("error",result)
-
+            else if(response.status === 401){
+                    navigate("/login");
+                    return;
             }
         }
         catch(error){

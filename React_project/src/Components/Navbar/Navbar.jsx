@@ -10,6 +10,7 @@ function Navbar({cart,setCart,search_value}){
     const [value,setValue]=useState("")
     const[open,setOpen]=useState(false)
     const navigate=useNavigate()
+    const isLoggedIn = !!localStorage.getItem("access");
 
     const setDarkMode = () => {
         document.body.classList.add("dark")
@@ -49,8 +50,8 @@ function Navbar({cart,setCart,search_value}){
 
     let send_value=(e)=>{
         if (e.key === 'Enter') {
-            navigate("/home")
             search_value(value)
+            navigate("/")
         }
     }
     return(
@@ -65,7 +66,7 @@ function Navbar({cart,setCart,search_value}){
                 <div className="container2">
                     <div className="container3">
                         <div>
-                            <p className="home" onClick={()=>{navigate("/home")}}>Home</p>
+                            <p className="home" onClick={()=>{navigate("/")}}>Home</p>
                         </div>
                         <div>
                             <p className="cart" onClick={Navigate}>Cart🛒({cart?.data?.items?.reduce((acc,item)=> acc + item.quantity,0) || 0})</p>
@@ -82,21 +83,49 @@ function Navbar({cart,setCart,search_value}){
                     <h4 className="header"><i className="bi bi-gear-fill"></i> Settings</h4>
                 </div>
                 <div className="menu">
-                    <div>
+                    {isLoggedIn && 
+                    (
+                        <div>
                         <p className="history" onClick={()=>{navigate("/order_history"); setOpen(prev => !prev);}}><i className="bi bi-clock-history"></i> Order History</p>
-                    </div>
+                        </div>
+                    )
+                    }
                     <div>
                         <p className="history" onClick={setDarkMode}><i className="bi bi-moon"></i> Dark Mode</p>
                     </div>
                     <div>
                         <p className="history" onClick={setLightMode}><i className="bi bi-sun"></i> Light Mode</p>
                     </div>
-                    <div>
-                        <p className="history" onClick={()=>{localStorage.removeItem("access") 
-                                                            localStorage.removeItem("refresh") 
-                                                            localStorage.removeItem("user")
-                                                            navigate("/")}}>LOGOUT</p>
-                    </div>
+                    
+
+                    {isLoggedIn ?(
+                        <div>
+                            <p
+                                className="history"
+                                onClick={() => {
+                                    localStorage.removeItem("access");
+                                    localStorage.removeItem("refresh");
+                                    localStorage.removeItem("user");
+                                    setCart(null)
+                                    navigate("/login");
+                                }}
+                            >
+                             ⬅ Logout
+                            </p>
+                        </div>
+                    ) : 
+                    (
+                        <div>
+                            <p
+                                className="history"
+                                onClick={() => {
+                                    navigate("/login", { replace: true })
+                                }}
+                            >
+                                👤 Login
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

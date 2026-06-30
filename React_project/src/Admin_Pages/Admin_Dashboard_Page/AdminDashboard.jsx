@@ -14,7 +14,7 @@ function AdminDashboard(){
         localStorage.removeItem("refresh")
         localStorage.removeItem("user")
 
-        navigate("/")
+        navigate("/login")
     }
 
     return(
