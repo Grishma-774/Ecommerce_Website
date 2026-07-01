@@ -26,8 +26,10 @@ function Register(){
 
 
     const validate = (event) => { 
-        event.preventDefault(); 
+        event.preventDefault();
 
+        setError({});
+        
         let newErrors = {}; 
 
         if (!formData.username.trim()){ 
@@ -62,10 +64,15 @@ function Register(){
         setError(newErrors); 
         
         if (Object.keys(newErrors).length === 0) {
-              
-           
-             
-            const send_data=async () => {
+
+            send_data()
+
+        } 
+
+
+    };
+
+    const send_data=async () => {
 
                 try{
                         setLoading(true)
@@ -96,7 +103,13 @@ function Register(){
                         } 
                         else{
                             console.log("server error",result)
-                            setError(result)
+                            if (result.non_field_errors) {
+                                setError({
+                                    general: result.non_field_errors[0]
+                                });
+                            } else {
+                                setError(result);
+                            }
                         }
 
                 }
@@ -111,14 +124,7 @@ function Register(){
                 }
                 
 
-            }
-
-            send_data()
-
-        } 
-
-
-    };
+    }
 
     const renderError = (field) => {
             if (!error[field]) return null;
